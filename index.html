@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Т-Профит | Гид продаж</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&family=Manrope:wght@300;400;500;600&display=swap');
+  :root{--bg:#0a0c10;--surface:#111318;--surface2:#181c24;--border:rgba(255,255,255,0.07);--accent:#00e5a0;--accent2:#0099ff;--accent3:#ff6b35;--text:#e8eaf0;--muted:#6b7280;--danger:#ff4444;--warn:#ffaa00;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+  .layout{display:flex;min-height:100vh;position:relative;z-index:1;}
+  .sidebar{width:280px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
+  .logo{padding:0 24px 28px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+  .logo-name{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-0.5px;}
+  .logo-sub{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1.5px;}
+  .nav-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);padding:0 24px 8px;margin-top:8px;}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px 24px;cursor:pointer;border-left:3px solid transparent;transition:all 0.2s;font-size:14px;color:var(--muted);}
+  .nav-item:hover{background:rgba(255,255,255,0.04);color:var(--text);border-left-color:var(--border);}
+  .nav-item.active{background:rgba(0,229,160,0.08);color:var(--accent);border-left-color:var(--accent);}
+  .nav-item .step-num{width:22px;height:22px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+  .nav-item.active .step-num{background:var(--accent);color:#000;}
+  .nav-item.done .step-num{background:rgba(0,229,160,0.2);color:var(--accent);}
+  .nav-item.done{color:rgba(0,229,160,0.5);}
+  .sidebar-footer{margin-top:auto;padding:20px 24px;border-top:1px solid var(--border);}
+  .progress-bar-wrap{background:var(--surface2);border-radius:100px;height:4px;overflow:hidden;margin-top:8px;}
+  .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width 0.5s ease;}
+  .main{flex:1;padding:40px 48px;max-width:900px;}
+  .section{display:none;}
+  .section.active{display:block;animation:fadeUp 0.35s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .section-header{margin-bottom:36px;}
+  .step-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
+  .step-badge span{color:var(--accent);font-weight:600;}
+  h1{font-family:'Unbounded',sans-serif;font-size:28px;font-weight:600;color:var(--text);line-height:1.3;letter-spacing:-0.5px;}
+  .section-desc{font-size:15px;color:var(--muted);margin-top:10px;line-height:1.6;max-width:600px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;transition:border-color 0.2s;}
+  .card:hover{border-color:rgba(255,255,255,0.12);}
+  .card-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:600;color:var(--text);letter-spacing:0.3px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+  .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:0.5px;}
+  .badge-green{background:rgba(0,229,160,0.12);color:var(--accent);}
+  .badge-blue{background:rgba(0,153,255,0.12);color:var(--accent2);}
+  .badge-orange{background:rgba(255,107,53,0.12);color:var(--accent3);}
+  .script-block{background:var(--surface2);border-radius:10px;padding:18px 20px;margin:12px 0;border-left:3px solid var(--accent);position:relative;}
+  .script-block.question{border-left-color:var(--accent2);}
+  .script-block.objection{border-left-color:var(--accent3);}
+  .script-block.tip{border-left-color:var(--warn);background:rgba(255,170,0,0.04);}
+  .script-role{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:6px;}
+  .script-text{font-size:14px;line-height:1.65;color:var(--text);}
+  .script-text em{color:var(--accent);font-style:normal;font-weight:600;}
+  .copy-btn{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+  .copy-btn:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+  .copy-btn.copied{color:var(--accent);border-color:var(--accent);}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .product-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+  .product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
+  .product-card.p1::before{background:var(--accent);}
+  .product-card.p2::before{background:var(--accent2);}
+  .product-card.p3::before{background:var(--accent3);}
+  .product-card:hover{border-color:rgba(255,255,255,0.15);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,0.3);}
+  .product-card.selected{border-color:var(--accent);background:rgba(0,229,160,0.05);}
+  .product-price{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;margin:12px 0 4px;}
+  .product-price.p1{color:var(--accent);}
+  .product-price.p2{color:var(--accent2);}
+  .product-price.p3{color:var(--accent3);}
+  .product-name{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--text);margin-bottom:10px;}
+  .feature-list{list-style:none;font-size:13px;color:var(--muted);line-height:2;}
+  .feature-list li::before{content:'→ ';color:var(--accent);opacity:0.6;}
+  .cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px;}
+  .cmp-table th{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+  .cmp-table td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text);line-height:1.5;}
+  .cmp-table tr:hover td{background:rgba(255,255,255,0.02);}
+  .check{color:var(--accent);}
+  .cross{color:var(--danger);}
+  .obj-item{border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;transition:border-color 0.2s;}
+  .obj-item.open{border-color:rgba(255,107,53,0.4);}
+  .obj-header{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500;color:var(--text);background:var(--surface);transition:background 0.2s;}
+  .obj-header:hover{background:var(--surface2);}
+  .obj-icon{width:28px;height:28px;border-radius:50%;background:rgba(255,107,53,0.1);color:var(--accent3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:transform 0.2s;}
+  .obj-item.open .obj-icon{transform:rotate(45deg);}
+  .obj-body{display:none;padding:0 20px 20px;background:var(--surface);border-top:1px solid var(--border);}
+  .obj-item.open .obj-body{display:block;padding-top:16px;}
+  .obj-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .obj-tab{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);color:var(--muted);background:transparent;transition:all 0.2s;}
+  .obj-tab:hover{border-color:rgba(255,255,255,0.15);color:var(--text);}
+  .obj-tab.active{background:rgba(255,107,53,0.12);border-color:rgba(255,107,53,0.4);color:var(--accent3);}
+  .obj-group{display:none;}
+  .obj-group.active{display:block;animation:fadeUp 0.25s ease;}
+  .checklist{list-style:none;}
+  .checklist li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text);cursor:pointer;}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist li.done{color:var(--muted);text-decoration:line-through;}
+  .check-box{width:20px;height:20px;border:2px solid var(--border);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+  .checklist li.done .check-box{background:var(--accent);border-color:var(--accent);color:#000;font-size:12px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;border:none;}
+  .btn-primary{background:var(--accent);color:#000;}
+  .btn-primary:hover{background:#00ffb3;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,229,160,0.25);}
+  .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .btn-secondary:hover{background:var(--surface2);border-color:rgba(255,255,255,0.15);}
+  .btn-row{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+  .tool-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;gap:16px;align-items:flex-start;margin-bottom:12px;cursor:pointer;transition:all 0.2s;}
+  .tool-card:hover{border-color:rgba(255,255,255,0.12);transform:translateX(4px);}
+  .tool-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .tool-info h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+  .tool-info p{font-size:12px;color:var(--muted);line-height:1.5;}
+  .tool-link{font-size:11px;color:var(--accent);margin-top:6px;display:block;}
+  .upsell-flow{display:flex;align-items:center;margin:20px 0;flex-wrap:wrap;gap:0;}
+  .upsell-node{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;text-align:center;min-width:120px;}
+  .upsell-node .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+  .upsell-node .value{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;}
+  .upsell-arrow{padding:0 12px;color:var(--accent);font-size:20px;}
+  .info-box{border-radius:10px;padding:16px 20px;margin:12px 0;font-size:14px;line-height:1.6;display:flex;gap:14px;}
+  .info-box.green{background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.2);color:var(--text);}
+  .info-box.blue{background:rgba(0,153,255,0.08);border:1px solid rgba(0,153,255,0.2);}
+  .info-box.orange{background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);}
+  .info-box .icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+  .stage-track{display:flex;margin:20px 0;overflow-x:auto;padding-bottom:8px;}
+  .stage-step{flex:1;min-width:80px;text-align:center;position:relative;}
+  .stage-step:not(:last-child)::after{content:'';position:absolute;top:14px;right:-1px;width:100%;height:2px;background:var(--border);z-index:0;}
+  .stage-step.done::after{background:var(--accent);}
+  .stage-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--surface);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;z-index:1;transition:all 0.3s;}
+  .stage-step.done .stage-dot{background:var(--accent);border-color:var(--accent);color:#000;font-size:14px;}
+  .stage-step.current .stage-dot{border-color:var(--accent);box-shadow:0 0 0 4px rgba(0,229,160,0.15);}
+  .stage-label{font-size:10px;color:var(--muted);line-height:1.3;text-transform:uppercase;letter-spacing:0.5px;}
+  .stage-step.done .stage-label{color:var(--accent);opacity:0.6;}
+  .stage-step.current .stage-label{color:var(--accent);}
+  .ma-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin:6px 0;font-size:13px;color:var(--text);line-height:1.6;cursor:pointer;transition:all 0.2s;display:flex;gap:10px;align-items:flex-start;}
+  .ma-item:hover{border-color:rgba(255,107,53,0.3);background:rgba(255,107,53,0.04);}
+  .ma-num{font-weight:700;color:var(--accent3);flex-shrink:0;min-width:18px;}
+  ::-webkit-scrollbar{width:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-name">Т-ПРОФИТ</div>
+      <div class="logo-sub">Гид продаж · 2026</div>
+    </div>
+    <div class="nav-label">Этапы сделки</div>
+    <div class="nav-item active" onclick="goto(0)" id="nav-0"><div class="step-num">1</div> Кто мы</div>
+    <div class="nav-item" onclick="goto(1)" id="nav-1"><div class="step-num">2</div> Вход в диалог</div>
+    <div class="nav-item" onclick="goto(2)" id="nav-2"><div class="step-num">3</div> Выявление задач</div>
+    <div class="nav-item" onclick="goto(3)" id="nav-3"><div class="step-num">4</div> Продукты</div>
+    <div class="nav-item" onclick="goto(4)" id="nav-4"><div class="step-num">5</div> Презентация</div>
+    <div class="nav-item" onclick="goto(5)" id="nav-5"><div class="step-num">6</div> Возражения</div>
+    <div class="nav-item" onclick="goto(6)" id="nav-6"><div class="step-num">7</div> Допродажи</div>
+    <div class="nav-item" onclick="goto(7)" id="nav-7"><div class="step-num">8</div> Закрытие</div>
+    <div class="sidebar-footer">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Прогресс звонка</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress" style="width:12%"></div></div>
+      <div style="font-size:12px;color:var(--accent);margin-top:8px;" id="progress-label">Шаг 1 из 8</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- S0: КТО МЫ -->
+    <section class="section active" id="section-0">
+      <div class="section-header">
+        <div class="step-badge"><span>01</span> / Компания</div>
+        <h1>Кто мы и что делаем</h1>
+        <p class="section-desc">Изучите позиционирование перед звонком. Чёткое понимание продукта — основа уверенной продажи.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🏢 Т-Профит <span class="badge badge-green">системный маркетинг</span></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;">Компания занимается <strong style="color:var(--text)">комплексным маркетингом и автоматизацией бизнеса</strong>. Мы не просто приводим трафик — мы выстраиваем систему привлечения и удержания клиентов под ключ.</p>
+      </div>
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <div class="card-title">🎯 Привлечение клиентов</div>
+          <ul class="feature-list">
+            <li>Оплата за квалифицированный лид с потенциалом продажи от 10Х</li>
+            <li>Управление рекламными кампаниями снижая затраты</li>
+            <li>Доведение до замера / встречи</li>
+            <li>Предпродажная подготовка полученных заявок</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">🔄 Реактивация клиентов</div>
+          <ul class="feature-list">
+            <li>Работа с «холодной» базой</li>
+            <li>Возврат ушедших клиентов</li>
+            <li>Ручная рассылка в мессенджерах с доступом к каждой переписке в одном окне</li>
+            <li>Ведение клиента до продажи без необходимости писать с другого мессенджера</li>
+            <li>Интеграция с Битрикс 24</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info-box green" style="margin-top:20px;">
+        <div class="icon">💡</div>
+        <div><strong>Ключевое УТП:</strong> Вы получаете полную маркетинговую инфраструктуру и продажи, оплачивая только стоимость заявок. Выявляем ключевые параметры и ведём переписку от лица заказчика.</div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="goto(1)">Начать диалог →</button></div>
+    </section>
+
+    <!-- S1: ВХОД В ДИАЛОГ -->
+    <section class="section" id="section-1">
+      <div class="section-header">
+        <div class="step-badge"><span>02</span> / Скрипт</div>
+        <h1>Вход в диалог</h1>
+        <p class="section-desc">Первые 30 секунд определяют тон всего разговора. Цель — установить контакт и получить право задавать вопросы.</p>
+      </div>
+      <div class="stage-track">
+        <div class="stage-step done"><div class="stage-dot">✓</div><div class="stage-label">Знаю продукт</div></div>
+        <div class="stage-step current"><div class="stage-dot"></div><div class="stage-label">Вход</div></div>
+        <div class="stage-step"><div class="stage-dot"></div><div class="stage-label">Анализ</div></div>
+        <div class="stage-step"><div class="stage-dot"></div><div class="stage-label">Презентация</div></div>
+        <div class="stage-step"><div class="stage-dot"></div><div class="stage-label">Возражения</div></div>
+        <div class="stage-step"><div class="stage-dot"></div><div class="stage-label">Закрытие</div></div>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📞 Скрипт открытия (входящий)</div>
+        <div class="script-text">«Здравствуйте! Это <em>[Ваше имя]</em>, компания Т-Профит. Вы оставили заявку — вижу, что вас интересует привлечение клиентов. Это сейчас актуально?»</div>
+        <button class="copy-btn" onclick="copyText(this,'Здравствуйте! Это [Ваше имя], компания Т-Профит. Вы оставили заявку — вижу, что вас интересует привлечение клиентов. Это сейчас актуально?')">копировать</button>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📞 Скрипт открытия (исходящий / реактивация)</div>
+        <div class="script-text">«Добрый день! Это <em>[Имя]</em>, Т-Профит. Мы специализируемся на <em>[НИША КЛИЕНТА]</em> привлечении клиентов для бизнеса с чеком клиента от 70 000 рублей. Предлагаю обсудить какие критерии клиента позволят вам заработать больше. Есть пара минут?»</div>
+        <button class="copy-btn" onclick="copyText(this,'Добрый день! Это [Имя], Т-Профит. Мы специализируемся на [НИША КЛИЕНТА] привлечении клиентов для бизнеса с чеком клиента от 70 000 рублей. Предлагаю обсудить какие критерии клиента позволят вам заработать больше. Есть пара минут?')">копировать</button>
+      </div>
+      <div class="script-block tip">
+        <div class="script-role">💡 Совет</div>
+        <div class="script-text">Если клиент говорит «не сейчас» — уточните: «В целом масштабироваться планируете? Когда удобнее перезвонить?» и сразу договоритесь на конкретное время. Не завершайте диалог без следующего шага.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(0)">← Назад</button>
+        <button class="btn btn-primary" onclick="goto(2)">Выявление задач →</button>
+      </div>
+    </section>
+
+    <!-- S2: ВЫЯВЛЕНИЕ -->
+    <section class="section" id="section-2">
+      <div class="section-header">
+        <div class="step-badge"><span>03</span> / Квалификация</div>
+        <h1>Выявление задач клиента</h1>
+        <p class="section-desc">6 вопросов — и вы точно знаете, какой продукт предложить. Не пропускайте ни одного.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">❓ 6 вопросов квалификации</div>
+        <ul class="checklist" id="qual-list">
+          <li onclick="toggleCheck(this)"><span class="check-box"></span><strong>1.</strong> Какой вид мебели в основном продаёте?</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span><strong>2.</strong> Вы в каких городах работаете?</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span><strong>3.</strong> Вы продаёте через замер или звонок?</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span><strong>4.</strong> Какие инструменты маркетинга сейчас используете? <span style="color:var(--muted);font-size:12px;">(ЯД, ВК, СММ, Авито, ОЗОН, ВБ)</span></li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span><strong>5.</strong> Как могу найти ваш сайт и группу в ВК?</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span><strong>6.</strong> Ведёте базу клиентов? <span style="color:var(--muted);font-size:12px;">(более 1 000 — предлагаем Рассылку)</span></li>
+        </ul>
+      </div>
+
+      <!-- ЛОГИКА ВЫБОРА ПРОДУКТА -->
+      <div class="card" style="border-color:rgba(0,229,160,0.2);margin-top:8px;">
+        <div class="card-title">🧭 Логика выбора продукта по ответам</div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+
+          <div style="background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.2);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px;">📋 База &gt; 1 000 клиентов</div>
+            <div style="font-size:14px;color:var(--text);">Предложите <strong style="color:var(--accent);">Ручную рассылку в мессенджерах</strong> — быстрый результат по существующей базе при минимальных вложениях (26 ₽/диалог).</div>
+          </div>
+
+          <div style="background:rgba(0,153,255,0.06);border:1px solid rgba(0,153,255,0.2);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent2);margin-bottom:6px;">🚫 Маркетинга нет совсем</div>
+            <div style="font-size:14px;color:var(--text);">Предложите <strong style="color:var(--accent2);">Система 123</strong> — создаём системный бренд с нуля: сайт, ВК, рекламные каналы, квалификация.</div>
+          </div>
+
+          <div style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.2);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent3);margin-bottom:6px;">✅ Маркетинг есть</div>
+            <div style="font-size:14px;color:var(--text);margin-bottom:10px;">Предложите проанализировать действующие инструменты.</div>
+            <div style="display:flex;flex-direction:column;gap:8px;padding-left:4px;">
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <span style="color:var(--accent);font-size:18px;line-height:1.2;">→</span>
+                <div><span style="color:var(--accent);font-weight:600;">Готов дать метрики</span> — проводим <strong>аудит инструментов</strong>. Смотрим что можно улучшить. Если видим точки роста — предлагаем <strong style="color:var(--accent2);">Система 123</strong>.</div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <span style="color:var(--accent3);font-size:18px;line-height:1.2;">→</span>
+                <div><span style="color:var(--accent3);font-weight:600;">Не готов давать метрики</span> — предлагаем <strong style="color:var(--accent);">За квал лиды</strong> — заявки без задействования их маркетинга.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="script-block question">
+        <div class="script-role">💬 Переход к продукту (связка)</div>
+        <div class="script-text">«Понял вас. По тому, что вы рассказали — у меня есть конкретное предложение именно под ваши задачи. Расскажу коротко, и вы сами решите, подходит или нет. Хорошо?»</div>
+        <button class="copy-btn" onclick="copyText(this,this.previousElementSibling.innerText)">копировать</button>
+      </div>
+
+      <div class="info-box blue">
+        <div class="icon">📌</div>
+        <div><strong>Критерии квал. лида:</strong> готовность встречи в ближайшие дни + установка в течение месяца + подходящее местоположение + бюджет от 200 000 ₽ (кухни / корпус) или от 70 000 ₽ (массив).</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(1)">← Назад</button>
+        <button class="btn btn-primary" onclick="goto(3)">К продуктам →</button>
+      </div>
+    </section>
+
+    <!-- S3: ПРОДУКТЫ -->
+    <section class="section" id="section-3">
+      <div class="section-header">
+        <div class="step-badge"><span>04</span> / Продукты</div>
+        <h1>Наши продукты</h1>
+        <p class="section-desc">Выберите подходящий продукт на основе задачи клиента. Нажмите карточку, чтобы увидеть детали.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
+        <div class="product-card p1" onclick="selectProduct(0)">
+          <div class="product-name">За квал лиды</div>
+          <div class="product-price p1">5 000 ₽</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">за квалифицированную заявку</div>
+          <ul class="feature-list"><li>Старт от 10 заявок</li><li>От 50 000 ₽</li><li>Быстрый запуск</li><li>Без инфраструктуры</li></ul>
+          <div style="margin-top:14px;"><span class="badge badge-green">Тест доступен</span></div>
+        </div>
+        <div class="product-card p2" onclick="selectProduct(1)">
+          <div class="product-name">Система 123</div>
+          <div class="product-price p2">3 800 ₽</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">оплата помесячно · 1 / 2 / 3 канала</div>
+          <ul class="feature-list"><li>1 канал: 30 квал. заявок/мес</li><li>2 канала: 60 квал. заявок/мес</li><li>3 канала: 90 квал. заявок/мес</li><li>Теплее заявки, бренд растёт</li></ul>
+          <div style="margin-top:14px;"><span class="badge badge-blue">от 3 месяцев</span></div>
+        </div>
+        <div class="product-card p3" onclick="selectProduct(2)">
+          <div class="product-name">Ручная рассылка в мессенджерах</div>
+          <div class="product-price p3">26 ₽</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">за диалог</div>
+          <ul class="feature-list"><li>Ручная рассылка TG/WA</li><li>Работа с «мёртвой» базой</li><li>Быстрый результат</li><li>Минимальный бюджет</li></ul>
+          <div style="margin-top:14px;"><span class="badge badge-orange">Телеграм</span></div>
+        </div>
+      </div>
+      <div id="product-detail" style="display:none;"></div>
+      <div class="card">
+        <div class="card-title">⚖️ За квал лиды vs Система 123</div>
+        <table class="cmp-table">
+          <thead><tr><th>Параметр</th><th>За квал лиды</th><th>Система 123</th></tr></thead>
+          <tbody>
+            <tr><td>Тест </td><td class="check">10 заявок</td><td class="cross">30 заявок</td></tr>
+            <tr><td>Минимальный бюджет</td><td>50 000 ₽</td><td>150 000 ₽</td></tr>
+            <tr><td>Скорость запуска</td><td class="check">Быстро</td><td>Дольше</td></tr>
+            <tr><td>Температура заявок</td><td>Холоднее</td><td class="check">Теплее</td></tr>
+            <tr><td>Развитие бренда</td><td class="cross">✗ Нет</td><td class="check">✓ Да</td></tr>
+            <tr><td>Для кого</td><td>Минимальный бюджет</td><td class="check">Системный рост</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- МАТЕМАТИКА СИСТЕМА 123 -->
+      <div class="card" style="border-color:rgba(0,153,255,0.25);margin-top:8px;">
+        <div class="card-title" style="color:var(--accent2);">📊 Система 123 — математика пакетов</div>
+        <div class="info-box blue" style="margin-bottom:16px;"><div class="icon">📌</div><div>Договор от <strong>3 месяцев</strong>, оплата помесячно. Пример на нише мебели на заказ от 200 000 ₽.</div></div>
+
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="obj-tab active" id="sc-btn-1" onclick="switchScenario(1)" style="background:rgba(0,153,255,0.1);border-color:rgba(0,153,255,0.4);color:var(--accent2);">✅ Есть сайт + ВК группа</button>
+          <button class="obj-tab" id="sc-btn-2" onclick="switchScenario(2)">🛠 Без сайта — создаём с нуля</button>
+        </div>
+
+        <div id="sc-1">
+          <div style="overflow-x:auto;">
+            <table class="cmp-table" style="min-width:520px;">
+              <thead><tr><th>Параметр</th><th style="color:var(--accent2);">1 канал</th><th style="color:var(--accent2);">2 канала</th><th style="color:var(--accent2);">3 канала</th></tr></thead>
+              <tbody>
+                <tr><td>Состав</td><td>Директ/ВК/Авито ПРО + квалификация</td><td>Директ/ВК/Авито ПРО (2 канала) + быстрая передача + квалификация</td><td>Директ/ВК/Авито ПРО (3 канала) + быстрая передача + квалификация</td></tr>
+                <tr><td>Рекл. бюджет (мин)</td><td>40 000 ₽</td><td>80 000 ₽</td><td>120 000 ₽</td></tr>
+                <tr><td>Цена / квал. заявка</td><td style="color:var(--accent2);font-weight:700;">5 000 ₽</td><td style="color:var(--accent2);font-weight:700;">4 300 ₽</td><td style="color:var(--accent2);font-weight:700;">3 800 ₽</td></tr>
+                <tr><td>Квал. заявок / мес</td><td>30</td><td>60</td><td>90</td></tr>
+                <tr><td>Стоимость пакета / мес</td><td>150 000 ₽</td><td>258 000 ₽</td><td>342 000 ₽</td></tr>
+                <tr><td>Потенциал продаж / мес</td><td>6 000 000 ₽</td><td>12 000 000 ₽</td><td>18 000 000 ₽</td></tr>
+                <tr><td>Реалистичный план / мес <span style="font-size:11px;color:var(--muted);">(30% конв.)</span></td><td style="color:var(--accent);font-weight:700;">1 800 000 ₽</td><td style="color:var(--accent);font-weight:700;">3 600 000 ₽</td><td style="color:var(--accent);font-weight:700;">5 400 000 ₽</td></tr>
+                <tr><td>Рекл. бюджет от выручки</td><td style="color:var(--warn);">8,33%</td><td style="color:var(--warn);">7,17%</td><td style="color:var(--warn);">6,33%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="info-box green" style="margin-top:12px;"><div class="icon">💡</div><div>При наличии конверсионного сайта и упакованной группы во ВКонтакте.</div></div>
+        </div>
+
+        <div id="sc-2" style="display:none;">
+          <div style="overflow-x:auto;">
+            <table class="cmp-table" style="min-width:520px;">
+              <thead><tr><th>Параметр</th><th style="color:var(--accent2);">1 канал</th><th style="color:var(--accent2);">2 канала</th><th style="color:var(--accent2);">3 канала</th></tr></thead>
+              <tbody>
+                <tr><td>Состав</td><td>Директ/ВК/Авито ПРО + создание сайта + упаковка ВК группы + СММ + квалификация</td><td>Директ/ВК/Авито ПРО (2 канала) + создание сайта + упаковка ВК группы + СММ + квалификация</td><td>Директ/ВК/Авито ПРО (3 канала) + создание сайта + упаковка ВК группы + СММ + квалификация</td></tr>
+                <tr><td>Рекл. бюджет (мин)</td><td>40 000 ₽</td><td>80 000 ₽</td><td>120 000 ₽</td></tr>
+                <tr><td>Цена / квал. заявка</td><td style="color:var(--accent2);font-weight:700;">7 100 ₽</td><td style="color:var(--accent2);font-weight:700;">5 355 ₽</td><td style="color:var(--accent2);font-weight:700;">4 500 ₽</td></tr>
+                <tr><td>Квал. заявок / мес</td><td>30</td><td>60</td><td>90</td></tr>
+                <tr><td>Стоимость пакета / мес</td><td>213 000 ₽</td><td>321 300 ₽</td><td>405 000 ₽</td></tr>
+                <tr><td>Потенциал продаж / мес</td><td>6 000 000 ₽</td><td>12 000 000 ₽</td><td>18 000 000 ₽</td></tr>
+                <tr><td>Реалистичный план / мес <span style="font-size:11px;color:var(--muted);">(30% конв.)</span></td><td style="color:var(--accent);font-weight:700;">1 800 000 ₽</td><td style="color:var(--accent);font-weight:700;">3 600 000 ₽</td><td style="color:var(--accent);font-weight:700;">5 400 000 ₽</td></tr>
+                <tr><td>Рекл. бюджет от выручки</td><td style="color:var(--warn);">11,83%</td><td style="color:var(--warn);">8,93%</td><td style="color:var(--warn);">7,50%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="info-box orange" style="margin-top:12px;"><div class="icon">🛠</div><div>Включает создание сайта, упаковка группы ВКонтакте и ежемесячное ведение СММ. Получаете полноценную инфраструктуру под ключ + возможность использовать больше инструментов маркетинга. Вы не платите за создание сайта и группы отдельно, а получаете их в цене заявки.</div></div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(2)">← Назад</button>
+        <button class="btn btn-primary" onclick="goto(4)">Презентовать →</button>
+      </div>
+    </section>
+
+    <!-- S4: ПРЕЗЕНТАЦИЯ -->
+    <section class="section" id="section-4">
+      <div class="section-header">
+        <div class="step-badge"><span>05</span> / Питч</div>
+        <h1>Презентация предложения</h1>
+        <p class="section-desc">Говорите языком выгод, а не функций. Привязывайте каждую особенность к задаче клиента.</p>
+      </div>
+      <div class="card" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.03);">
+        <div class="card-title">✅ Ключевой оффер</div>
+        <div class="script-block" style="margin-top:0;">
+          <div class="script-role">Для любого продукта</div>
+          <div class="script-text">«Наша задача — не просто привести вам лиды, а <em>довести клиента до замера или встречи</em> в вашем календаре. Мы выявляем ключевые параметры каждого клиента и ведём переписку от вашего лица — вы получаете уже прогретого человека.»</div>
+          <button class="copy-btn" onclick="copyText(this,'Наша задача — не просто привести вам лиды, а довести клиента до замера или встречи в вашем календаре. Мы выявляем ключевые параметры каждого клиента и ведём переписку от вашего лица — вы получаете уже прогретого человека.')">копировать</button>
+        </div>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📌 Питч «За квал лиды»</div>
+        <div class="script-text">«Мы запускаем вам поток заявок по фиксированной цене — <em>5 000 рублей за квалифицированный лид</em>. Можно начать с 10 штук, это от 50 000 рублей. Вы платите только за результат — за реальные обращения. Быстрый старт, минимальный риск. Идеально, чтобы проверить нишу.»</div>
+        <button class="copy-btn" onclick="copyText(this,this.previousElementSibling.innerText)">копировать</button>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📌 Питч «Система 123»</div>
+        <div class="script-text">«Система 123 — это комплексный подход от <em>3 месяцев</em>, оплата помесячно. Вы выбираете пакет под свои задачи: 1 канал — 30 квал. заявок по 5 000 рублей, 2 канала — 60 заявок по 4 300, 3 канала — 90 заявок по 3 800. Директ, ВКонтакте, Авито, квалификация нашим сотрудником до 5 критериев. При кухне от 200 000 рублей реалистичный план — <em>от 1 800 000 до 5 400 000 рублей в месяц</em>. Заявки теплее, потому что мы строим инфраструктуру именно под вас.»</div>
+        <button class="copy-btn" onclick="copyText(this,this.previousElementSibling.innerText)">копировать</button>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📌 Питч «Ручная рассылка в мессенджерах»</div>
+        <div class="script-text">«У вас уже есть база контактов, которые когда-то интересовались. Мы делаем ручную рассылку в мессенджерах через TGWALEAD — <em>всего 26 рублей за диалог</em>. Это дешевле любой рекламы. И это работает, потому что человек уже вас знает.»</div>
+        <button class="copy-btn" onclick="copyText(this,this.previousElementSibling.innerText)">копировать</button>
+      </div>
+      <div class="info-box orange">
+        <div class="icon">⚡</div>
+        <div><strong>После питча спросите:</strong> «Какой из вариантов вам ближе по ситуации?» — это помогает клиенту самому выбрать и снижает давление.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(3)">← Назад</button>
+        <button class="btn btn-primary" onclick="goto(5)">Работа с возражениями →</button>
+      </div>
+    </section>
+
+    <!-- S5: ВОЗРАЖЕНИЯ -->
+    <section class="section" id="section-5">
+      <div class="section-header">
+        <div class="step-badge"><span>06</span> / Возражения</div>
+        <h1>Работа с возражениями</h1>
+        <p class="section-desc">Выберите категорию → найдите возражение → раскройте и получите готовые ответы из нашей базы.</p>
+      </div>
+
+      <div class="obj-tabs">
+        <button class="obj-tab active" onclick="switchObjTab(this,'tab-price')">💸 Деньги</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-think')">🤔 Подумаю</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-supplier')">🤝 Есть поставщик</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-negative')">😒 Негативный опыт</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-notime')">⏳ Нет времени</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-nothing')">🚫 Ничего не нужно</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-director')">👔 Решает директор</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-noknow')">❓ Не знаю вас</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-email')">📧 На почту</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-reviews')">⭐ Отзывы</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-cases')">📂 Кейсы</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-freeze')">❄️ Заморозка / Сезон</button>
+        <button class="obj-tab" onclick="switchObjTab(this,'tab-noorders')">📭 Нет заказов</button>
+      </div>
+
+      <!-- ДЕНЬГИ -->
+      <div class="obj-group active" id="tab-price">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>💸 «Дорого»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Да, но у нас качественно.</div>
+            <div class="ma-item"><span class="ma-num">2</span>С чем вы сравниваете?</div>
+            <div class="ma-item"><span class="ma-num">3</span>Сколько для вас недорого?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Цена — это единственное, что останавливает?</div>
+            <div class="ma-item"><span class="ma-num">5</span>Я правильно понял: если по цене договоримся — вы купите?</div>
+            <div class="ma-item"><span class="ma-num">6</span>Не надо бояться больше тратить, надо бояться меньше зарабатывать.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Пока вы не знаете, за что платите — любая цена будет казаться большой.</div>
+            <div class="ma-item"><span class="ma-num">8</span>Отсутствие нашего продукта вам сейчас уже обходится гораздо дороже — давайте посчитаем.</div>
+            <div class="ma-item"><span class="ma-num">9</span>Многие наши клиенты сначала тоже так говорили, а потом купили и очень довольны.</div>
+            <div class="ma-item"><span class="ma-num">10</span>Это не у нас дорого — это вы сравниваете с совершенно другим уровнем качества и сервиса.</div>
+            <div class="ma-item"><span class="ma-num">11</span>Дешевле обойдётся дороже.</div>
+            <div class="ma-item"><span class="ma-num">12</span>Зато не придётся покупать дважды.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>💸 «Нет бюджета / нет денег»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Нет денег или нет денег на продукт, который с гарантией окупится в разы?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Получается, вы не верите, что наш продукт окупится?</div>
+            <div class="ma-item"><span class="ma-num">3</span>А если бы деньги были — вы бы купили?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Хотите расскажу, как найти бюджет?</div>
+            <div class="ma-item"><span class="ma-num">5</span>Когда планируется появление бюджета? Давайте всё заранее проработаем — как только деньги появятся, уже будет всё готово.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Это не вопрос нехватки денег — это вопрос выбора приоритетов. Давайте посмотрим приоритетность нашего продукта.</div>
+            <div class="info-box green" style="margin-top:10px;"><div class="icon">💡</div><div>Если бюджет реально маленький — предложите «Ручную рассылку» как старт от 26 ₽ за диалог.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ПОДУМАЮ -->
+      <div class="obj-group" id="tab-think">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🤔 «Я подумаю»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Что мешает принять решение сейчас?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Что нам сделать, чтобы вы точно купили у нас?</div>
+            <div class="ma-item"><span class="ma-num">3</span>Я вижу — остались сомнения. Давайте я их развею.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Когда вы хотите принять решение?</div>
+            <div class="ma-item"><span class="ma-num">5</span>Пока вы думаете — хорошее предложение может уйти / цена может вырасти.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Если вы примете решение сейчас — я дам отличный бонус.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Принципиально вам нравится идея сотрудничества? [ждёте ответа] Тогда что именно хотите обдумать?</div>
+            <div class="ma-item"><span class="ma-num">8</span>У нас политика встречных шагов: чем быстрее вы примете решение — тем больше мы пойдём вам навстречу.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>📞 «Я сам вам перезвоню»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Не стоит так себя утруждать — я лучше первым наберу вас. Скажите, когда это сделать?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Когда вы перезвоните — акция может уже закончиться.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Я правильно понимаю, что могу перезвонить с более интересным предложением?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Некоторые клиенты говорили: «Я сам перезвоню» — а потом оказалось, что упустили отличную возможность.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Что могло бы убедить вас принять решение сейчас, а не перезванивать потом?</div>
+            <div class="ma-item"><span class="ma-num">6</span>Если вы примете решение сейчас — я дам более интересные условия. Хотите узнать какие?</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🗓️ «Мы будем иметь вас в виду»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Хотелось бы, чтобы вы имели наш товар, а не нас в виду — это будет более перспективно.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Пока вы будете иметь нас в виду — вы не будете получать выгоды, которые даёт наш продукт.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Все, кто так говорили, потом жалели, что не начали работать с нами раньше.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Что могло бы убедить вас купить сейчас, а не иметь нас в виду долгое время?</div>
+            <div class="ma-item"><span class="ma-num">5</span>А если мы предложим более интересную цену? Это позволит нам договориться сейчас?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ПОСТАВЩИК -->
+      <div class="obj-group" id="tab-supplier">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🤝 «Не хочу менять поставщика»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Я не предлагаю вам менять поставщика — возьмите у нас часть. Ваш поставщик будет знать и крепче держаться за вас.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Если вы у него давно берёте — его предложение может быть не таким выгодным, как можем сделать мы.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Разве ваш поставщик запрещает вам сравнивать? Нет — давайте сравним.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Чем больше поставщиков — тем больше каждый из них вас любит и лучше старается.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Если у вас только один поставщик — вы рискуете при форс-мажоре.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Все, кто так говорили, потом жалели, что не сменили поставщика раньше.</div>
+            <div class="ma-item"><span class="ma-num">7</span>А если бы вы всё-таки решили попробовать — что бы вы взяли у нас?</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>💑 «Хорошие отношения с текущим поставщиком»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>А с нами будут отличные.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Хорошие отношения не испортятся, если они действительно хорошие, а не за деньги.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Чем больше поставщиков — тем крепче отношения, потому что каждый боится вас потерять.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Когда хорошие отношения — иногда поставщик этим злоупотребляет. Давайте проверим.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Скажите, они поставляют вам бесплатно? Нет — значит, это отношения за деньги, а их можно сравнить.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Я не предлагаю отказаться — просто возьмите 30% у нас, чтобы он не расслаблялся.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Давайте сделаем пробную закупку у нас и потом сравните.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>👨‍👩‍👦 «У директора брат/сестра работает у поставщика»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Это большая проблема — значит, поставщик будет этим точно злоупотреблять.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Ваш брат запрещает вам брать у других? «Нет» — ну тогда берите.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Берите у нас только часть, чтобы ваш брат и их компания боялись вас потерять.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Брат — не кандалы, на месте не держат.</div>
+            <div class="ma-item"><span class="ma-num">5</span>А если мы предложим интересную цену? Это меняет ситуацию?</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>💬 «Что я скажу нашему поставщику?»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Скажете: «Было приятно работать».</div>
+            <div class="ma-item"><span class="ma-num">2</span>Скажите ему правду — что вам предложили более интересные условия.</div>
+            <div class="ma-item"><span class="ma-num">3</span>А ничего не говорите — просто игнорируйте. Он сам всё додумает и ещё больше будет стараться.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Человек вашего уровня не должен оправдываться перед поставщиками.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Я правильно понимаю: если я вам подскажу, что ответить — вы готовы будете с нами работать?</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🎁 «Они учитывают мой интерес»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>А если мы учтём ваш интерес более интересно?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Учитывать интерес — это нормально, мы тоже это делаем. Другое дело, что у нас продукт лучше.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Надо, чтобы было интересно не только вам, но и вашей компании.</div>
+            <div class="ma-item"><span class="ma-num">4</span>А хотите, чтобы и дальше они учитывали ваш интерес? Тогда нужно часть отдать нам — они будут тогда любить вас ещё больше.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Я правильно понял: если мы тоже учтём ваш интерес — вы готовы будете часть заказов отдать нам?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- НЕГАТИВНЫЙ ОПЫТ -->
+      <div class="obj-group" id="tab-negative">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>😒 «Был негативный опыт с аналогичным продуктом»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Что именно произошло? Расскажите — давайте посмотрим, что сделать, чтобы это не повторилось.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Это значит, что вы уже знаете все нюансы. Мы их учтём и негативный опыт превратится в позитивный.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Возможно, вы связались с недобросовестными поставщиками — это не значит, что все такие.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Давайте сравним, был ли этот продукт аналогичным — часто продукт абсолютно не аналогичный, просто назывался похоже.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Я правильно понимаю: если я смогу обосновать, что этот опыт с нами не повторится — вы готовы заключить договор?</div>
+            <div class="ma-item"><span class="ma-num">6</span>Когда был этот негативный опыт? О, прошло уже столько времени — сейчас совершенно другие технологии.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Самое страшное в негативном опыте — не то, что вы откажете нам, а то, что вы закрыли для себя возможность использования этого продукта. Это гораздо более серьёзный минус для вашего бизнеса.</div>
+            <div class="ma-item"><span class="ma-num">8</span>Зачем закрывать для себя возможности из-за незначительного негативного опыта? Нужно учесть ошибки и попробовать снова.</div>
+            <div class="ma-item"><span class="ma-num">9</span>Что могло бы вас убедить попробовать ещё раз?</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>😤 «Был негативный опыт с вами»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Скажите, что именно произошло? Давайте я подниму историю и отвечу на все вопросы.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Негативный опыт позволяет каждому из нас становиться лучше. Мы уже сделали выводы и больше этого не повторится.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Именно поэтому и звоню — чтобы компенсировать тот негативный опыт хорошими условиями на новую поставку.</div>
+            <div class="ma-item"><span class="ma-num">4</span>У вас тоже с клиентами бывает негативный опыт. Как вы его «заглаживаете»? Мы в отношении вас сделаем то же самое.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Негативный опыт — отличная возможность «отжать» более интересные условия. «Отжимайте», я с удовольствием их предложу.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Дайте выговориться. Выслушайте все претензии, потом спросите: «Как мы можем это компенсировать? Какой вариант вас устроит?»</div>
+            <div class="ma-item"><span class="ma-num">7</span>Так как мы уже вас знаем — мы знаем ваши ожидания и знаем, как их удовлетворить. С другим поставщиком этого нет.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>💬 «Слышал негативные отзывы»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Что именно вы слышали? Давайте обсудим конкретно.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Скажите, а кто это говорил, как вы думаете?</div>
+            <div class="ma-item"><span class="ma-num">3</span>Негативных отзывов нет только у маленькой компании или у той, что недавно на рынке.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Эти слухи распространяют конкуренты.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Да, есть негативные отзывы — но они тонут в океане позитивных. Позитивных в сотни раз больше.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Конечно, есть негативные отзывы. За то мы их не скрываем, а исправляем быстрее других.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Я правильно понимаю — вы ищете компанию, у которой нет ни одного негативного отзыва? Как вы думаете, что это за компания?</div>
+            <div class="ma-item"><span class="ma-num">8</span>Давайте вместе посмотрим на отзывы — я уверен, смогу прокомментировать практически каждый.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- НЕТ ВРЕМЕНИ -->
+      <div class="obj-group" id="tab-notime">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>⏳ «Нет времени»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Почему вы думаете, что потребуется много времени?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Тем более нужно работать с теми, с кем нет накладок и проблем — вот с нами нет накладок.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Это единственное, что останавливает?</div>
+            <div class="ma-item"><span class="ma-num">4</span>А если бы время было — вы бы выбрали наш продукт?</div>
+            <div class="ma-item"><span class="ma-num">5</span>Все, кто так говорили, потом благодарили, что я убедил их работать с нами.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>📲 «Сам перезвоню»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Не стоит так себя утруждать — я лучше первым наберу вас. Скажите, когда это сделать?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Когда вы перезвоните — акция может уже закончиться.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Я правильно понимаю, что могу перезвонить с более интересным предложением?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Некоторые клиенты говорили: «Я сам перезвоню» — а потом оказалось, что упустили отличную возможность.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Что могло бы убедить вас принять решение сейчас, а не перезванивать потом?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- НИЧЕГО НЕ НУЖНО -->
+      <div class="obj-group" id="tab-nothing">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🚫 «Ничего не нужно»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>А если предложу то, что нужно? Более интересную цену? Отсрочку? Ассортимент?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Очень жаль. Вот если бы было нужно — вы бы здорово сэкономили и заработали. Рассказать как?</div>
+            <div class="ma-item"><span class="ma-num">3</span>Чтобы дальше было так же хорошо — нужно работать с лучшими. Давайте сравним, работаете ли вы сейчас с лучшими.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Вы так говорите, потому что ещё с нами не работали. Как поработаете — увидите, что очень много было нужно, просто вам не предлагали.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Рассмотрите нас как выгодную альтернативу, как запасного поставщика. Когда будет нужно — мы будем под рукой.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Я правильно понял: когда будет нужно — вы готовы будете к нам обратиться? Для этого давайте обсудим все нюансы сейчас.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>✅ «Всё есть»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>А если предложу то, чего нет?</div>
+            <div class="ma-item"><span class="ma-num">2</span>То есть, если предложу то, чего вам не хватает — вы готовы будете заключить договор?</div>
+            <div class="ma-item"><span class="ma-num">3</span>Иногда кажется, что всё есть, потому что вы не работали с поставщиком с более широким ассортиментом.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Именно поэтому предлагаю сравнить — то, что у вас всё есть, не значит, что за это нужно переплачивать.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Давайте просто станем вашим дополнительным поставщиком — чтобы вы могли «сталкивать нас лбами» с основным. Каждый из нас будет стараться лучше.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Я понимаю, что всё есть. А что хотелось бы улучшить?</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🧠 «Сам знаю где купить / сам всё знаю»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>С нами будете знать ещё больше.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Давайте сравним — если вы действительно всё знаете, вы убедитесь в этом. А если нет — найдёте что-то новое.</div>
+            <div class="ma-item"><span class="ma-num">3</span>А если вы что-то упускаете? А вдруг что-то не учитываете?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Вы всё знаете исходя из вашего предыдущего опыта. А исходя из того опыта, которого у вас пока ещё нет?</div>
+            <div class="ma-item"><span class="ma-num">5</span>Все, кто говорил: «Сам всё знаю» — потом благодарили за то, что мы начали сотрудничать.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Я правильно понял: если я вас удивлю и окажется, что вы этого не знали — вы готовы будете заключить договор?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- РЕШАЕТ ДИРЕКТОР -->
+      <div class="obj-group" id="tab-director">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>👔 «Решает директор / Москва / центральный офис»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>А если бы вы принимали решение — вы бы купили?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Если мы с директором договоримся — вы согласны?</div>
+            <div class="ma-item"><span class="ma-num">3</span>Но прислушивается-то он к вам.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Да, решает директор — но работать-то вам, отвечать-то вам, спросит-то он с вас.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Отлично — вы сделаете ему сюрприз: мы всё с вами подготовим, чтобы он принял правильное решение.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Можете дать его контакт? Я могу на вас не ссылаться — переговорю с ним напрямую и облегчу вам задачу.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Давайте сделаем технико-экономическое обоснование, которое вы положите ему на стол — подчеркнёте свой профессионализм.</div>
+            <div class="ma-item"><span class="ma-num">8</span>Что нам сделать, чтобы вы пошли к вашему директору и убедили его?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- НЕ ЗНАЮ ВАС -->
+      <div class="obj-group" id="tab-noknow">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>❓ «Я вас не знаю / мы о вас не слышали»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Вы о нас не слышали, потому что мы не тратим деньги на рекламу — вкладываем в сервис и качество для клиентов.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Именно поэтому и звоню — рассказать о нас.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Если вы нас не знаете — значит у вас не будет переплаты за бренд и раскрученность. Логично?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Что мне о нас рассказать, чтобы вы купили у нас?</div>
+            <div class="ma-item"><span class="ma-num">5</span>Все, кто говорили «я вас не знаю» — потом говорили: «Как жаль, что я вас не знал раньше».</div>
+            <div class="ma-item"><span class="ma-num">6</span>Это хорошо, что вы нас не знаете — для вас будет приятный сюрприз: высокий уровень качества и сервиса.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Я правильно понял: если я расскажу о нас — вы будете готовы с нами работать?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- НА ПОЧТУ -->
+      <div class="obj-group" id="tab-email">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>📧 «Отправляйте всё на почту»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Что именно вам отправить на почту?</div>
+            <div class="ma-item"><span class="ma-num">2</span>Сколько времени вы потратите на просмотр? Минут 10? Тогда давайте лучше за эти 10 минут я всё расскажу.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Вам всё равно будет некогда смотреть — давайте я всё расскажу на словах.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Электронное письмо не ответит на все ваши вопросы, а я отвечу.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Позвольте угадаю: я отправлю, а вы скажете, что ещё не смотрели, и это будет продолжаться очень долго. Давайте сэкономим время — сделаю самое выгодное предложение прямо сейчас.</div>
+            <div class="ma-item"><span class="ma-num">6</span>«Отправляйте всё на почту» — так обычно говорят, когда хотят отделаться от менеджера. Простите, если не смог вас заинтересовать. Дайте ещё один шанс.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Буквально 60 секунд — и вам будет понятно всё «от и до» о выгоде работы с нами.</div>
+            <div class="ma-item"><span class="ma-num">8</span>А если я дам хорошую суперскидку? Это позволит нам договориться прямо сейчас?</div>
+            <div class="info-box blue" style="margin-top:10px;"><div class="icon">💡</div><div>Если клиент всё же настаивает — спокойно отправьте, потом перезвоните: «Конечно, такому занятому человеку некогда смотреть. Именно поэтому давайте я расскажу устно».</div></div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>📄 «Ещё не смотрел ваше предложение»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Отлично! Значит у меня есть возможность рассказать вам самому.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Там нечего смотреть — там общая информация. Давайте я расскажу на словах самую суть.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Ни в коем случае смотреть не нужно — давайте сразу посчитаем вашу заявку и я сделаю выгодное предложение.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Когда вы хотите посмотреть? Давайте я перезвоню после того, как вы посмотрите.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Если бы вы посмотрели — какое наиболее вероятное возражение вы бы сказали? Давайте я на него отвечу прямо сейчас.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🚫 «Не звоните сюда больше»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Я правильно понимаю, что вас уже все достали своими звонками? Но ведь мы не такие — обратите внимание вот на это…</div>
+            <div class="ma-item"><span class="ma-num">2</span>Это будет последний звонок, но выслушайте меня хотя бы один раз.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Понимаю, что все хотят с вами работать — но не все могут предложить такие интересные условия, как мы.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Обещаю, не буду больше звонить — только по делу. [и продолжаете звонить по делу]</div>
+            <div class="ma-item"><span class="ma-num">5</span>Больше звонить не буду, а меньше звонить можно?</div>
+            <div class="ma-item"><span class="ma-num">6</span>Совершенно нормальная реакция — развелось очень много плохих продавцов. Как я вас понимаю. Разрешите поднять настроение и доказать, что я не такой…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ОТЗЫВЫ -->
+      <div class="obj-group" id="tab-reviews">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>⭐ «Слышал негативные отзывы» / «Плохая репутация»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Что именно вы слышали? Давайте обсудим конкретно.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Скажите, а кто это говорил — как вы думаете? (подводим к тому, что источник может быть ненадёжным)</div>
+            <div class="ma-item"><span class="ma-num">3</span>А вы сами пишете негативные отзывы? (запускает цепочку размышлений о том, кто их пишет)</div>
+            <div class="ma-item"><span class="ma-num">4</span>Негативных отзывов нет только у маленькой компании или у той, что недавно на рынке.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Эти слухи распространяют конкуренты.</div>
+            <div class="ma-item"><span class="ma-num">6</span>Да, есть негативные отзывы — но они тонут в океане позитивных. Позитивных в сотни раз больше.</div>
+            <div class="ma-item"><span class="ma-num">7</span>Конечно, есть негативные отзывы. За то мы их не скрываем, а исправляем быстрее других.</div>
+            <div class="ma-item"><span class="ma-num">8</span>Давайте вместе посмотрим на отзывы — я уверен, смогу прокомментировать практически каждый, их не так много.</div>
+            <div class="ma-item"><span class="ma-num">9</span>Я правильно понимаю — вы ищете компанию, у которой нет ни одного негативного отзыва? Как вы думаете, что это за компания?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- КЕЙСЫ -->
+      <div class="obj-group" id="tab-cases">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>📂 «Покажите кейсы именно из нашей ниши»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Все ваши конкуренты работают одинаково? Нет — у каждого предпринимателя свой характер, своя команда. Поэтому сравнивать вас с конкурентами некорректно. Наша система даст вам ощутимый результат — это мы гарантируем.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Вы относитесь к человеку, который готов внедрять новейшие методики, или предпочитаете всё старое? [Если за новшество] — Тогда зачем нам обсуждать старые методики? Мы каждый месяц повышаем эффективность. Предлагаю начинать, а не смотреть на прошлые заслуги.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Вы цените своё время? Тогда зачем тратить его на чужие кейсы — чтобы понять результат другой компании, нужно знать её бизнес-процессы. Правильнее потратить время на планирование работы с вами.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Знаете историю про Кодак? Они до последнего не отходили от плёночных камер, пока цифровые не забрали весь рынок. Чтобы не допустить такой ситуации — прислушайтесь к нам и откройтесь новым методам.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ЗАМОРОЗКА / СЕЗОН -->
+      <div class="obj-group" id="tab-freeze">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🧊 «Пока всё заморозили»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Но вас же не заморозили — мы с вами общаемся. Значит, есть шанс.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Что именно заморозили? С чем это связано?</div>
+            <div class="ma-item"><span class="ma-num">3</span>На какой период заморозили? Когда появятся возможности?</div>
+            <div class="ma-item"><span class="ma-num">4</span>Пока всё заморожено — давайте согласуем договор. Это вас ни к чему не обязывает. Когда ситуация разморозится — у нас уже будет всё готово.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Некоторые наши клиенты тоже говорили, что всё заморозили — пока мы не предложили интересные условия.</div>
+            <div class="info-box blue" style="margin-top:10px;"><div class="icon">💡</div><div>Пока бюджет заморожен — предложите «Ручную рассылку» как минимально бюджетный старт: всего 26 ₽ за диалог, никаких авансов.</div></div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🌡️ «Сейчас не сезон»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Именно поэтому и звоню — пока не сезон, у нас есть время всё правильно настроить и запустить без спешки.</div>
+            <div class="ma-item"><span class="ma-num">2</span>В не сезон самое время запустить тест. Отработаете связки — в сезон пойдёт поток.</div>
+            <div class="ma-item"><span class="ma-num">3</span>В сезон мы работаем в первую очередь с теми, кто начал с нами раньше — то есть именно сейчас.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Пока не сезон — самое время подписать договор. Это вас ни к чему не обязывает. Когда пойдёт сезон — всё уже будет готово.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Я правильно понял: если бы был сезон — вы бы с нами работали? Тогда давайте оформим всё сейчас — и в сезон будете наготове.</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>🔥 «Сейчас сезон — некогда»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Именно в сезон и нужно максимально усиливать поток клиентов — иначе вы теряете деньги прямо сейчас.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Мы берём всё на себя — вам не нужно тратить время. Мы сами настроим, запустим и доведём до встречи.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Понимаю, что некогда — именно поэтому предлагаю «Ручную рассылку»: запускается быстро, не требует участия с вашей стороны.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Что могло бы убедить вас взять у нас несмотря на разгар сезона?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- НЕТ ЗАКАЗОВ -->
+      <div class="obj-group" id="tab-noorders">
+        <div class="obj-item">
+          <div class="obj-header" onclick="toggleObj(this)"><span>📭 «Нет заказов / нет покупателей»</span><div class="obj-icon">+</div></div>
+          <div class="obj-body">
+            <div class="ma-item"><span class="ma-num">1</span>Это именно та ситуация, когда нужен наш продукт — мы приводим клиентов, а не просто рекламу. Оплата только за реальные заявки.</div>
+            <div class="ma-item"><span class="ma-num">2</span>Нет заказов и нет работы с нами — вдруг это взаимосвязано? Давайте проверим.</div>
+            <div class="ma-item"><span class="ma-num">3</span>Давайте вместе решим проблему заказов — с этого и начнём. «За квал лиды» — минимальный старт от 10 заявок.</div>
+            <div class="ma-item"><span class="ma-num">4</span>Есть контакты старых клиентов? Сделаем «Ручную рассылку» — быстро и без бюджета на рекламу.</div>
+            <div class="ma-item"><span class="ma-num">5</span>Я правильно понял: если бы заказы были — вы бы купили у нас? Тогда давайте сначала их сделаем вместе.</div>
+            <div class="info-box orange" style="margin-top:10px;"><div class="icon">⚡</div><div>При «нет заказов» — первым делом предложите «Ручную рассылку» по базе: быстрый результат при минимальном вложении.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(4)">← Назад</button>
+        <button class="btn btn-primary" onclick="goto(6)">Допродажи →</button>
+      </div>
+    </section>
+    <section class="section" id="section-6">
+      <div class="section-header">
+        <div class="step-badge"><span>07</span> / Upsell</div>
+        <h1>Допродажи</h1>
+        <p class="section-desc">Клиент купил один продукт — предложите второй как логичное дополнение, а не навязывание.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🔄 Матрица допродаж</div>
+        <div class="upsell-flow" style="margin-bottom:20px;">
+          <div class="upsell-node"><div class="label">Купил</div><div class="value" style="color:var(--accent);">За квал лиды / Система 123</div></div>
+          <div class="upsell-arrow">→</div>
+          <div class="upsell-node"><div class="label">Предложите</div><div class="value" style="color:var(--accent3);">Ручную рассылку</div></div>
+          <div class="upsell-arrow">→</div>
+          <div class="upsell-node"><div class="label">Выгода</div><div class="value" style="color:var(--warn);">26 ₽/диалог</div></div>
+        </div>
+        <div class="upsell-flow">
+          <div class="upsell-node"><div class="label">Купил</div><div class="value" style="color:var(--accent3);">Ручную рассылку</div></div>
+          <div class="upsell-arrow">→</div>
+          <div class="upsell-node"><div class="label">Предложите</div><div class="value" style="color:var(--accent);">За квал лиды / Система 123</div></div>
+          <div class="upsell-arrow">→</div>
+          <div class="upsell-node"><div class="label">Выгода</div><div class="value" style="color:var(--warn);">Новый поток</div></div>
+        </div>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📌 Скрипт допродажи «Ручная рассылка» после лидов</div>
+        <div class="script-text">«Отлично, что выбрали привлечение новых клиентов. Пока идут новые лиды — есть смысл параллельно «разбудить» тех, кто уже покупал у вас. Наша ручная рассылка в мессенджерах стоит <em>26 рублей за диалог</em>. Хотите — добавим в следующем месяце?»</div>
+        <button class="copy-btn" onclick="copyText(this,this.previousElementSibling.innerText)">копировать</button>
+      </div>
+      <div class="script-block">
+        <div class="script-role">📌 Скрипт допродажи «За квал лиды» после рассылки</div>
+        <div class="script-text">«Ручная рассылка — отличный быстрый старт. Но база со временем заканчивается. Давайте параллельно запустим поток новых клиентов — <em>от 10 заявок по 5000 рублей</em>. Так у вас будет стабильный рост.»</div>
+        <button class="copy-btn" onclick="copyText(this,this.previousElementSibling.innerText)">копировать</button>
+      </div>
+      <div class="info-box green">
+        <div class="icon">🎯</div>
+        <div><strong>Момент для допродажи:</strong> Предлагайте второй продукт, когда клиент уже согласился на первый — в этот момент доверие максимальное, и «нет» встречается редко.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(5)">← Назад</button>
+        <button class="btn btn-primary" onclick="goto(7)">Закрытие сделки →</button>
+      </div>
+    </section>
+
+    <!-- S7: ЗАКРЫТИЕ -->
+    <section class="section" id="section-7">
+      <div class="section-header">
+        <div class="step-badge"><span>08</span> / Закрытие</div>
+        <h1>Закрытие сделки</h1>
+        <p class="section-desc">Зафиксируйте договорённости и определите следующий шаг. Сделка жива, пока есть следующий шаг.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+        <div class="script-block" style="margin:0;">
+          <div class="script-role">✅ Альтернативное закрытие</div>
+          <div class="script-text">«Давайте начнём с 10 или с 30 заявок — что удобнее по бюджету прямо сейчас?»</div>
+          <button class="copy-btn" onclick="copyText(this,'Давайте начнём с 10 или с 30 заявок — что удобнее по бюджету прямо сейчас?')">копировать</button>
+        </div>
+        <div class="script-block" style="margin:0;">
+          <div class="script-role">✅ Прямое закрытие</div>
+          <div class="script-text">«Тогда предлагаю двигаться: я готовлю договор, вы проверяете — и запускаемся. Когда удобно созвониться финально?»</div>
+          <button class="copy-btn" onclick="copyText(this,'Тогда предлагаю двигаться: я готовлю договор, вы проверяете — и запускаемся. Когда удобно созвониться финально?')">копировать</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Чек-лист закрытия звонка</div>
+        <ul class="checklist" id="close-list">
+          <li onclick="toggleCheck(this)"><span class="check-box"></span>Подтвердил выбор продукта (За квал лиды / Система 123 / Ручная рассылка)</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span>Согласовал бюджет и объём</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span>Назначил следующий шаг с конкретным временем</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span>Отправил резюме в мессенджер / на почту</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span>Занёс данные в CRM</li>
+          <li onclick="toggleCheck(this)"><span class="check-box"></span>Поставил задачу-напоминание</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">🔗 Ссылки для клиента</div>
+        <div class="tool-card" onclick="window.open('https://kck.cac-ltv.ru','_blank')">
+          <div class="tool-icon" style="background:rgba(0,229,160,0.1);">🎯</div>
+          <div class="tool-info"><h4>За квал лиды</h4><p>Квалифицированные заявки, 5000 ₽/лид, старт от 10 шт.</p><span class="tool-link">kck.cac-ltv.ru →</span></div>
+        </div>
+        <div class="tool-card" onclick="window.open('https://docs.google.com/document/d/1_cXWEAS9NEqzOM4J6newz-9btitDtE_s/edit','_blank')">
+          <div class="tool-icon" style="background:rgba(0,153,255,0.1);">📄</div>
+          <div class="tool-info"><h4>Система 123</h4><p>Комплексный подход, окупаемость бюджета + 10%</p><span class="tool-link">Открыть документ →</span></div>
+        </div>
+        <div class="tool-card" onclick="window.open('https://tgr-mu.vercel.app','_blank')">
+          <div class="tool-icon" style="background:rgba(255,107,53,0.1);">📲</div>
+          <div class="tool-info"><h4>Ручная рассылка в мессенджерах (TGWALEAD)</h4><p>Ручная рассылка TG/WA, 26 ₽/диалог</p><span class="tool-link">tgr-mu.vercel.app →</span></div>
+        </div>
+      </div>
+      <div class="info-box green" style="margin-top:16px;">
+        <div class="icon">🏆</div>
+        <div><strong>Отлично!</strong> Вы прошли весь сценарий продажи. Зафиксируйте результат в CRM и поставьте следующий таск.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goto(6)">← Назад</button>
+        <button class="btn btn-primary" onclick="resetAll()" style="background:var(--accent3);">🔄 Новый клиент</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  let current = 0;
+  const total = 8;
+  const progressValues = [12,25,38,50,62,75,88,100];
+
+  function goto(idx) {
+    document.getElementById('section-'+current).classList.remove('active');
+    document.getElementById('nav-'+current).classList.remove('active');
+    if (idx > current) {
+      document.getElementById('nav-'+current).classList.add('done');
+      const s = document.getElementById('nav-'+current).querySelector('.step-num');
+      if (s) s.innerHTML = '✓';
+    }
+    current = idx;
+    document.getElementById('section-'+current).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach((n,i) => { n.classList.remove('active'); if(i===current) n.classList.add('active'); });
+    document.getElementById('progress').style.width = progressValues[current]+'%';
+    document.getElementById('progress-label').textContent = 'Шаг '+(current+1)+' из '+total;
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function toggleObj(header) { header.parentElement.classList.toggle('open'); }
+
+  function switchObjTab(btn, tabId) {
+    document.querySelectorAll('.obj-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.obj-group').forEach(g=>g.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    document.querySelectorAll('.obj-item').forEach(i=>i.classList.remove('open'));
+  }
+
+  function toggleCheck(li) {
+    li.classList.toggle('done');
+    const box = li.querySelector('.check-box');
+    if (li.classList.contains('done')) { box.innerHTML='✓'; } else { box.innerHTML=''; }
+  }
+
+  function copyText(btn, text) {
+    const t = text || btn.previousElementSibling?.innerText || '';
+    navigator.clipboard.writeText(t.trim()).then(() => {
+      btn.textContent='скопировано!'; btn.classList.add('copied');
+      setTimeout(()=>{ btn.textContent='копировать'; btn.classList.remove('copied'); },1800);
+    });
+  }
+
+  const productDetails = [
+    { color:'var(--accent)', name:'За квал лиды', desc:'Оптимально для теста. Быстрый запуск, минимальный риск, оплата только за реальный результат.', url:'https://kck.cac-ltv.ru', urlLabel:'kck.cac-ltv.ru', points:['Фиксированная цена: 5 000 ₽ за квалифицированную заявку','Старт 10 заявок (50 000 ₽)','Стандартный объём: 30 заявок','Более холодные заявки vs системного подхода','Не развивает бренд','Идеально для проверки ниши или гипотез'] },
+    { color:'var(--accent2)', name:'Система 123', desc:'Системный рост от 3 месяцев. 1, 2 или 3 канала. Полная рекламная инфраструктура под ключ.', url:'https://docs.google.com/document/d/1_cXWEAS9NEqzOM4J6newz-9btitDtE_s/edit', urlLabel:'Открыть КП', points:['Договор от 3 месяцев, оплата помесячно','1 канал: 30 заявок · 5 000 ₽/заявка · 150 000 ₽/мес','2 канала: 60 заявок · 4 300 ₽/заявка · 258 000 ₽/мес','3 канала: 90 заявок · 3 800 ₽/заявка · 342 000 ₽/мес','Директ + VK + Авито + чат-бот + квалификация','Реалистичный план при мебели 200К: 1.8–5.4 млн/мес'] },
+    { color:'var(--accent3)', name:'Ручная рассылка в мессенджерах', desc:'Быстрый доход с минимальным бюджетом. Возвращаем тех, кто вас уже знает.', url:'https://tgr-mu.vercel.app', urlLabel:'tgr-mu.vercel.app', points:['26 рублей за диалог','Рассылка руками наших агентов','Возможность общаться с клиентом с номера на котором был начат диалог','Конверсия в интерес до 25%','Отлично как реактивация базы или как допродажа','Минимальный порог входа 26 000 ₽ '] }
+  ];
+
+  function selectProduct(idx) {
+    document.querySelectorAll('.product-card').forEach((c,i)=>c.classList.toggle('selected',i===idx));
+    const p = productDetails[idx];
+    const panel = document.getElementById('product-detail');
+    panel.style.display = 'block';
+    panel.innerHTML = `<div class="card" style="border-color:${p.color};background:rgba(0,0,0,0.2);margin-bottom:20px;"><div class="card-title" style="color:${p.color};">🎯 ${p.name}</div><p style="font-size:14px;color:var(--muted);margin-bottom:14px;line-height:1.6;">${p.desc}</p><ul class="feature-list">${p.points.map(pt=>`<li>${pt}</li>`).join('')}</ul><div style="margin-top:14px;"><a href="${p.url}" target="_blank" style="color:${p.color};font-size:13px;text-decoration:none;">🔗 ${p.urlLabel} →</a></div></div>`;
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  function switchScenario(n) {
+    document.getElementById('sc-1').style.display = n===1 ? 'block' : 'none';
+    document.getElementById('sc-2').style.display = n===2 ? 'block' : 'none';
+    const b1 = document.getElementById('sc-btn-1');
+    const b2 = document.getElementById('sc-btn-2');
+    if (n===1) {
+      b1.style.background='rgba(0,153,255,0.1)'; b1.style.borderColor='rgba(0,153,255,0.4)'; b1.style.color='var(--accent2)';
+      b2.style.background=''; b2.style.borderColor=''; b2.style.color='';
+    } else {
+      b2.style.background='rgba(255,107,53,0.1)'; b2.style.borderColor='rgba(255,107,53,0.4)'; b2.style.color='var(--accent3)';
+      b1.style.background=''; b1.style.borderColor=''; b1.style.color='';
+    }
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.nav-item').forEach((n,i)=>{ n.classList.remove('active','done'); const s=n.querySelector('.step-num'); if(s) s.innerHTML=i+1; });
+    document.querySelectorAll('.checklist li').forEach(li=>{ li.classList.remove('done'); const b=li.querySelector('.check-box'); if(b) b.innerHTML=''; });
+    document.querySelectorAll('.obj-item').forEach(item=>item.classList.remove('open'));
+    document.querySelectorAll('.product-card').forEach(c=>c.classList.remove('selected'));
+    const pd = document.getElementById('product-detail'); if(pd) pd.style.display='none';
+    current=0; goto(0);
+  }
+</script>
+</body>
+</html>
