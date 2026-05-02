@@ -131,11 +131,81 @@
   ::-webkit-scrollbar{width:6px;}
   ::-webkit-scrollbar-track{background:transparent;}
   ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+
+  /* ══════════════════════════════════════
+     МОБИЛЬНАЯ АДАПТАЦИЯ
+  ══════════════════════════════════════ */
+  .burger{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:10px;width:42px;height:42px;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px;padding:10px;}
+  .burger span{display:block;width:20px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s;}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;backdrop-filter:blur(2px);}
+  .mob-step-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:150;background:var(--surface);border-top:1px solid var(--border);padding:8px 12px 12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));}
+  .mob-step-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .mob-step-label{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--accent);font-weight:600;text-align:center;flex:1;}
+  .mob-step-sub{font-size:10px;color:var(--muted);text-align:center;margin-top:2px;}
+  .mob-nav-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--text);flex-shrink:0;transition:all 0.2s;}
+  .mob-nav-btn:hover{background:rgba(0,229,160,0.1);border-color:var(--accent);color:var(--accent);}
+  .mob-nav-btn:disabled{opacity:0.3;pointer-events:none;}
+  .mob-progress{height:2px;background:var(--surface2);border-radius:2px;margin-bottom:8px;overflow:hidden;}
+  .mob-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width 0.4s ease;}
+
+  @media(max-width:768px){
+    .burger{display:flex;}
+    .sidebar{position:fixed;left:-300px;top:0;z-index:100;transition:left 0.3s ease;height:100vh;width:280px;}
+    .sidebar.open{left:0;}
+    .sidebar-overlay.open{display:block;}
+    .mob-step-bar{display:block;}
+    .main{padding:20px 16px 100px;max-width:100%;}
+    h1{font-size:20px;}
+    .section-desc{font-size:13px;}
+    .section-header{margin-bottom:24px;}
+    .grid-2{grid-template-columns:1fr;}
+    .card{padding:16px;}
+    .card-title{font-size:12px;}
+    .product-card{padding:16px;}
+    .product-price{font-size:18px;}
+    .script-block{padding:14px 14px 14px 16px;}
+    .script-text{font-size:13px;}
+    .copy-btn{position:static;display:block;margin-top:10px;width:100%;text-align:center;}
+    .btn-row{margin-top:20px;}
+    .btn{padding:11px 18px;font-size:13px;}
+    .btn-row .btn-secondary,.btn-row .btn-primary{flex:1;justify-content:center;}
+    .cmp-table th,.cmp-table td{padding:8px 10px;font-size:12px;}
+    .obj-header{padding:13px 14px;font-size:13px;}
+    .obj-tabs{gap:6px;}
+    .obj-tab{padding:6px 12px;font-size:11px;}
+    .ma-item{font-size:12px;padding:10px 12px;}
+    .upsell-flow{flex-direction:column;align-items:flex-start;gap:8px;}
+    .upsell-arrow{transform:rotate(90deg);padding:4px 0;}
+    .info-box{font-size:13px;padding:13px 14px;gap:10px;}
+    .checklist li{font-size:13px;}
+    .tool-card{padding:14px;}
+    .stage-label{font-size:9px;}
+    .sidebar-footer{display:none;}
+    /* Отступ сверху под бургер */
+    .section-header{padding-top:52px;}
+    .section-header:first-child{padding-top:52px;}
+  }
+
+  @media(max-width:400px){
+    .main{padding:16px 12px 100px;}
+    h1{font-size:18px;}
+    .obj-tab{padding:5px 10px;font-size:10px;}
+  }
 </style>
 </head>
 <body>
 <div class="layout">
-  <aside class="sidebar">
+  <!-- Бургер -->
+  <button class="burger" id="burger" onclick="toggleSidebar()" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+  <!-- Оверлей -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
     <div class="logo">
       <div class="logo-name">Т-ПРОФИТ</div>
       <div class="logo-sub">Гид продаж · 2026</div>
@@ -155,6 +225,19 @@
       <div style="font-size:12px;color:var(--accent);margin-top:8px;" id="progress-label">Шаг 1 из 8</div>
     </div>
   </aside>
+
+  <!-- Мобильная нижняя навигация -->
+  <div class="mob-step-bar" id="mob-bar">
+    <div class="mob-progress"><div class="mob-progress-fill" id="mob-progress" style="width:12%"></div></div>
+    <div class="mob-step-inner">
+      <button class="mob-nav-btn" id="mob-prev" onclick="mobPrev()" disabled>←</button>
+      <div>
+        <div class="mob-step-label" id="mob-step-label">Шаг 1 / 8</div>
+        <div class="mob-step-sub" id="mob-step-sub">Кто мы</div>
+      </div>
+      <button class="mob-nav-btn" id="mob-next" onclick="mobNext()">→</button>
+    </div>
+  </div>
 
   <main class="main">
 
@@ -962,6 +1045,8 @@
   const total = 8;
   const progressValues = [12,25,38,50,62,75,88,100];
 
+  const stepNames = ['Кто мы','Вход в диалог','Выявление задач','Продукты','Презентация','Возражения','Допродажи','Закрытие'];
+
   function goto(idx) {
     document.getElementById('section-'+current).classList.remove('active');
     document.getElementById('nav-'+current).classList.remove('active');
@@ -975,7 +1060,32 @@
     document.querySelectorAll('.nav-item').forEach((n,i) => { n.classList.remove('active'); if(i===current) n.classList.add('active'); });
     document.getElementById('progress').style.width = progressValues[current]+'%';
     document.getElementById('progress-label').textContent = 'Шаг '+(current+1)+' из '+total;
+    updateMobBar();
+    closeSidebar();
     window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function updateMobBar() {
+    const pct = progressValues[current];
+    document.getElementById('mob-progress').style.width = pct + '%';
+    document.getElementById('mob-step-label').textContent = 'Шаг ' + (current+1) + ' / ' + total;
+    document.getElementById('mob-step-sub').textContent = stepNames[current] || '';
+    document.getElementById('mob-prev').disabled = current === 0;
+    document.getElementById('mob-next').disabled = current === total - 1;
+  }
+
+  function mobPrev() { if (current > 0) goto(current - 1); }
+  function mobNext() { if (current < total - 1) goto(current + 1); }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+    document.getElementById('burger').classList.toggle('open');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+    document.getElementById('burger').classList.remove('open');
   }
 
   function toggleObj(header) { header.parentElement.classList.toggle('open'); }
